@@ -6,3 +6,12 @@ scipy
 joblib
 fastapi
 uvicorn
+langchain
+langgraph
+chromadb 
+sentence-transformers 
+langchain-community 
+pypdf 
+langchain-groq
+langchain-huggingface
+streamlit-extras

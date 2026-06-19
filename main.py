@@ -55,7 +55,7 @@ from pydantic import BaseModel
 import joblib
 import uuid
 
-from graph_workflow.workflow import graph
+# from graph_workflow.workflow import graph
 from email_service import send_email
 
 app = FastAPI()
@@ -99,13 +99,16 @@ def predict(ticket: Ticket):
     department = dept_dict[int(pred[0][0])]
     priority = priority_dict[int(pred[0][1])]
 
-    result = graph.invoke(
-        {
-            "ticket": ticket.text,
-            "department": department,
-            "priority": priority
-        }
-    )
+    # result = graph.invoke(
+    #     {
+    #         "ticket": ticket.text,
+    #         "department": department,
+    #         "priority": priority
+    #     }
+    # )
+    result = {
+    "response": "Test response"
+}
 
     ticket_id = str(uuid.uuid4())[:8]
 

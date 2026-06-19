@@ -1,0 +1,11 @@
+VPN issues can occur due to:
+
+1. DNS problems
+2. Firewall restrictions
+3. Expired credentials
+
+Solutions:
+
+- Restart VPN client.
+- Flush DNS.
+- Reconnect.

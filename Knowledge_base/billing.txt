@@ -1,0 +1,7 @@
+Refund requests usually take 5-7 business days.
+
+Common reasons for failure:
+
+1. Incorrect card details
+2. Bank decline
+3. Expired card

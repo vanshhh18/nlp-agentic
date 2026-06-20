@@ -162,7 +162,7 @@ with left:
                     response = requests.post(
                         "https://vanshhh-18-nlp-agentic.hf.space/predict",  # ✅ Fixed URL
                         json={"text": feedback, "email": email},
-                        timeout=60,  # increased timeout for LLM response
+                        timeout=200,  # increased timeout for LLM response
                     )
                     data = response.json()
                     if "department" not in data:

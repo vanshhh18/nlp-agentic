@@ -1,5 +1,3 @@
-
-
 import streamlit as st
 import requests
 
@@ -162,13 +160,17 @@ with left:
             with st.spinner("Analyzing ticket…"):
                 try:
                     response = requests.post(
-                        "https://vanshhh-18-nlp-agentic.hf.space",
+                        "https://vanshhh-18-nlp-agentic.hf.space/predict",  # ✅ Fixed URL
                         json={"text": feedback, "email": email},
-                        timeout=15,
+                        timeout=60,  # increased timeout for LLM response
                     )
-                    st.session_state.result = response.json()
-                    st.session_state.submitted_email = email
-                    st.rerun()
+                    data = response.json()
+                    if "department" not in data:
+                        st.error(f"Unexpected API response: {data}")
+                    else:
+                        st.session_state.result = data
+                        st.session_state.submitted_email = email
+                        st.rerun()
                 except Exception as e:
                     st.error(f"Could not reach API: {e}")
 
@@ -189,7 +191,7 @@ with left:
             </div>
             <div style="font-size:0.72rem;color:#9CA3AF;">
               Your feedback has been routed to the
-              <strong style="color:#E5E7EB;">{res_left['department']}</strong>
+              <strong style="color:#E5E7EB;">{res_left.get('department', '—')}</strong>
               department &nbsp;·&nbsp; Team:
               <strong style="color:#E5E7EB;">{res_left.get('assigned_team', '—')}</strong>
             </div>
@@ -202,7 +204,8 @@ with left:
           </div>
         </div>
         """, unsafe_allow_html=True)
-     # ── timeline ─────────────────────────────────────────────────────────
+
+        # ── timeline ─────────────────────────────────────────────────────────
         steps = [
             ("✅", "Ticket received"),
             ("✅", "Department classified"),
@@ -261,9 +264,9 @@ with right:
         # ── metric chips ──────────────────────────────────────────────────────
         m1, m2, m3 = st.columns(3)
         with m1:
-            st.metric("🏢 Department", res["department"])
+            st.metric("🏢 Department", res.get("department", "—"))
         with m2:
-            st.metric("⚡ Priority", res["priority"])
+            st.metric("⚡ Priority", res.get("priority", "—"))
         with m3:
             st.metric("👥 Team", res.get("assigned_team", "—"))
 
@@ -274,7 +277,7 @@ with right:
           🤖 AI Analysis
         </p>
         """, unsafe_allow_html=True)
-        st.info(res["response"])
+        st.info(res.get("response", "No response available."))
 
         # ── confirmation banner ───────────────────────────────────────────────
         st.markdown(f"""
@@ -297,7 +300,7 @@ with right:
               <span style="background:linear-gradient(90deg,#3B82F6,#8B5CF6);
                 color:white;font-size:0.65rem;font-weight:700;
                 padding:2px 8px;border-radius:20px;letter-spacing:0.06em;">
-                #{res['ticket_id']}
+                #{res.get('ticket_id', '—')}
               </span>
             </div>
           </div>

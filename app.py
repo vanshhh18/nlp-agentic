@@ -162,7 +162,7 @@ with left:
             with st.spinner("Analyzing ticket…"):
                 try:
                     response = requests.post(
-                        "https://nlp-agentic.onrender.com",
+                        "https://vanshhh-18-nlp-agentic.hf.space",
                         json={"text": feedback, "email": email},
                         timeout=15,
                     )
